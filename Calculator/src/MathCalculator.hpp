@@ -1,6 +1,5 @@
 #pragma once
 #include <iostream>
-#include <cstdint>
 
 class MathCalculator
 {
@@ -24,44 +23,6 @@ public:
 		selectOperation = 0;
 	}
 
-	void userSetNumbers()
-	{
-		double number1 = 0.0, number2 = 0.0;
-		std::cout << "Enter your first number: ";
-		std::cin >> number1;
-		std::cout << "Enter your second number: ";
-		std::cin >> number2;
-		setNumber(number1, number2);
-	}
-
-	void userSetOperation()
-	{
-		int userMathOperation = 0;
-		std::cout << "Choose the operation for the calculation:\n"
-			<< "\n1. Add\n"
-			<< "2. Subtract\n"
-			<< "3. Multiply\n"
-			<< "4. Divide\n"
-			<< "5. Go back\n" << std::endl; // Add functionality
-		std::cout << "Select the number for the operation: ";
-		std::cin >> userMathOperation;
-		setOperation(userMathOperation);
-	}
-
-	void printResult()
-	{
-		std::cout << std::endl;
-
-		if (selectOperation == 1)
-			std::cout << "Result: " << m_firstNum << " " << "+" << " " << m_secondNum << " = " << m_firstNum + m_secondNum << std::endl;
-		if (selectOperation == 2)
-			std::cout << "Result: " << m_firstNum << " " << "-" << " " << m_secondNum << " = " << m_firstNum - m_secondNum << std::endl;
-		if (selectOperation == 3)
-			std::cout << "Result: " << m_firstNum << " " << "*" << " " << m_secondNum << " = " << m_firstNum * m_secondNum << std::endl;
-		if (selectOperation == 4) // add to check if num2 = 0
-			std::cout << "Result: " << m_firstNum << " " << "/" << " " << m_secondNum << " = " << m_firstNum / m_secondNum << std::endl;
-	}
-
 	// Setter & Getter for operation
 	int getOperation(int selectOperation) const { return selectOperation; }
 
@@ -80,5 +41,58 @@ public:
 		m_firstNum = num1; 
 		m_secondNum = num2;
 	}
+
+	void userSetNumbers()
+	{
+		double number1 = 0.0, number2 = 0.0;
+		std::cout << "Enter your first number: ";
+		std::cin >> number1;
+		std::cout << "Enter your second number: ";
+		std::cin >> number2;
+		setNumber(number1, number2);
+	}
+
+	void userSetOperation()
+	{
+		int userMathOperation = 0;
+		std::cout << "Choose the operation for the calculation:\n"
+			<< "\n1. Add\n"
+			<< "2. Subtract\n"
+			<< "3. Multiply\n"
+			<< "4. Divide\n"
+			<< "5. Change numbers\n"
+			<< "Q to exit the program\n" << std::endl;
+
+		std::cout << "Select the number for the operation: ";
+		std::cin >> userMathOperation;
+		setOperation(userMathOperation);
+	}
+
+	void printResult()
+	{
+		std::cout << std::endl;
+		while (selectOperation != 'q' || selectOperation != 'Q')
+		{
+			if (selectOperation == 1)
+				std::cout << "Result: " << m_firstNum << " " << "+" << " " << m_secondNum << " = " << m_firstNum + m_secondNum << std::endl;
+			if (selectOperation == 2)
+				std::cout << "Result: " << m_firstNum << " " << "-" << " " << m_secondNum << " = " << m_firstNum - m_secondNum << std::endl;
+			if (selectOperation == 3)
+				std::cout << "Result: " << m_firstNum << " " << "*" << " " << m_secondNum << " = " << m_firstNum * m_secondNum << std::endl;
+			if (selectOperation == 4) // add to check if num2 = 0
+				if (m_secondNum != 0)
+					std::cout << "Result: " << m_firstNum << " " << "/" << " " << m_secondNum << " = " << m_firstNum / m_secondNum << std::endl;
+				else
+					std::cout << "Dividing by 0 is forbidden!\n" << std::endl;
+
+			if (selectOperation == 5)
+			{
+				userSetNumbers();
+				userSetOperation();
+				printResult();
+			}
+		}
+	}
+
 
 };
